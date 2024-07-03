@@ -6,7 +6,7 @@ export class CreditsScene extends Phaser.Scene {
     preload() {
         // Load images
         this.load.image("bg_image", "assets/png/Nightmare(cover).png");
-        this.load.image("button_exit", "assets/png/sign_ExitGame.png");
+        this.load.image("button_back", "assets/png/sign_Back.png");
 
         // Load audio
         this.load.audio("button_click", "assets/audio/click on.wav");
@@ -17,7 +17,7 @@ export class CreditsScene extends Phaser.Scene {
         background.setTint(0x808080); 
 
         const textContent = `
-        Developed By:
+        Game Developed By:
         
         4Fusion Tech
         
@@ -26,21 +26,28 @@ export class CreditsScene extends Phaser.Scene {
         Historia, Angelo Bon T.
         Rubino, Mike Juri P.
         
-        Thank you for playing!`;
+
+
+        Thank you for playing!
+        
+
+
+        Copyright © 2024 4FusionTech
+        All rights reserved.`;
 
         const creditsText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, textContent, {
             fontSize: '12px', // Adjust size as needed
             color: '#ffffff',
             align: 'center',
             wordWrap: { width: this.cameras.main.width - 100 }
-        }).setOrigin(0.6, 0.05);
+        }).setOrigin(0.6, 0.1);
 
         // Button click sound
         this.buttonClick = this.sound.add("button_click", { volume: 0.5 });
 
-        // Exit button
+        // Back button
         const buttonScale = 0.10; 
-        const exitButton = this.add.image(this.cameras.main.centerX, this.cameras.main.height - 50, "button_exit");
+        const exitButton = this.add.image(this.cameras.main.centerX, this.cameras.main.height - 50, "button_back");
         exitButton.setScale(buttonScale);
         exitButton.setInteractive();
 

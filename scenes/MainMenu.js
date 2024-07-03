@@ -17,9 +17,17 @@ export class MainMenu extends Phaser.Scene {
     }
 
     create() {
+        // Add background image
         this.add.image(0, 0, "bg_image").setOrigin(0, 0).setDisplaySize(this.cameras.main.width, this.cameras.main.height);
-        this.menuBgm = this.sound.add("menu_bgm", { loop: true, volume: 0.5 });
-        this.menuBgm.play();
+        
+        // Background music
+        if (!this.sound.get('menu_bgm')) {
+            this.menuBgm = this.sound.add("menu_bgm", { loop: true, volume: 0.5 });
+            this.menuBgm.play();
+        } else {
+            this.menuBgm = this.sound.get('menu_bgm');
+        }
+
         this.buttonClick = this.sound.add("button_click", { volume: 0.5 });
 
         // Create buttons
@@ -58,16 +66,14 @@ export class MainMenu extends Phaser.Scene {
 
         // Settings button
         settingsButton.on('pointerup', () => {
-            console.log("Settings button clicked");
-            // You can add functionality to go to settings scene here
-            // this.scene.start('SettingsScene');
+            this.scene.start('SettingsScene');
             this.buttonClick.play();
         });
 
         // Credits button
         creditsButton.on('pointerup', () => {
             this.scene.start('CreditsScene');
-            this.menuBgm.stop();
+            this.buttonClick.play();
         });
 
         // Exit button
