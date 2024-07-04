@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <title>Nightmare</title>
     <script src="/plugins/phaser.min.js"></script>
-    <script src="/plugins/AnimatedTiles.min.js"></script>
     <script type="module" src="/scenes/MainMenu.js"></script>
     <script type="module" src="/scenes/GameScene.js"></script>
-    <script type="module" src="/scenes/CreditsScene.js"></script> 
+    <script type="module" src="/scenes/CreditsScene.js"></script>
 </head>
 <body>
     <script type="module">
@@ -26,11 +25,6 @@
                     arcade: {
                         debug: true
                     }
-                },
-                plugins: {
-                    scene: [
-                        { key: 'AnimatedTiles', plugin: AnimatedTiles, mapping: 'animatedTiles' }
-                    ]
                 }
             };
 

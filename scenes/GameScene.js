@@ -2,7 +2,7 @@ export class GameScene extends Phaser.Scene {
     constructor() {
         super("GameScene");
         this.canBeHurt = true;
-        this.mailCollected = 0; 
+        this.mailCollected = 0;
     }
 
     preload() {
@@ -32,9 +32,9 @@ export class GameScene extends Phaser.Scene {
         this.load.image("button_tryAgain", "assets/png/sign_TryAgain.png");
 
         // Load animated sprites
-        this.load.spritesheet("mob_hand", "assets/png/mob_Hand.png", { frameWidth: 96, frameHeight: 96 });
-        this.load.spritesheet("mob_skull", "assets/png/mob_Skull.png", { frameWidth: 96, frameHeight: 96 });
-        this.load.spritesheet("mob_slug", "assets/png/mob_Slug.png", { frameWidth: 96, frameHeight: 96 });
+        this.load.spritesheet("mob_hand", "assets/png/mob_Hand.png", { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet("mob_skull", "assets/png/mob_Skull.png", { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet("mob_slug", "assets/png/mob_Slug.png", { frameWidth: 64, frameHeight: 64 });
         this.load.spritesheet("mailbox", "assets/png/mailbox.png", { frameWidth: 32, frameHeight: 64 });
         this.load.spritesheet("stella_walkBack", "assets/png/stella_WalkBack.png", { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet("stella_walkFront", "assets/png/stella_WalkFront.png", { frameWidth: 32, frameHeight: 32 });
@@ -55,12 +55,60 @@ export class GameScene extends Phaser.Scene {
         const map = this.make.tilemap({ key: "gameMap" });
         const tileset = map.addTilesetImage("nightmare_spritesheet", "nightmare_spritesheet");
 
+        // Load tile layers
         const groundTile = map.createLayer("groundTile", tileset, 0, 0);
         const waterTile = map.createLayer("waterTile", tileset, 0, 0);
         const bridgeTile = map.createLayer("bridgeTile", tileset, 0, 0);
-        
-        // Load all objects
-        this.loadObjects(map, "playerObj", "stella_walkFront", true, true, 1);
+
+        // Water tile collision
+        waterTile.setCollisionByProperty({ collidesWater: true });
+
+        // Player and mob animations
+        this.anims.create({
+            key: "stella_walkBack",
+            frames: this.anims.generateFrameNumbers("stella_walkBack", { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "stella_walkFront",
+            frames: this.anims.generateFrameNumbers("stella_walkFront", { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "stella_walkLeft",
+            frames: this.anims.generateFrameNumbers("stella_walkLeft", { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "stella_walkRight",
+            frames: this.anims.generateFrameNumbers("stella_walkRight", { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "mob_hand_anim",
+            frames: this.anims.generateFrameNumbers("mob_hand", { start: 0, end: 11 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "mob_skull_anim",
+            frames: this.anims.generateFrameNumbers("mob_skull", { start: 0, end: 11 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "mob_slug_anim",
+            frames: this.anims.generateFrameNumbers("mob_slug", { start: 0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        // Load objects
         this.loadObjects(map, "keyObj", "key");
         this.loadObjects(map, "doorObj", "door");
         this.loadObjects(map, "mailboxObj", "mailbox");
@@ -70,30 +118,17 @@ export class GameScene extends Phaser.Scene {
         this.loadObjects(map, "trees_deadObj", "tree_dead");
         this.loadObjects(map, "trees_candleObj", "tree_candle");
         this.loadObjects(map, "trees_pineObj", "tree_pine");
-        this.loadObjects(map, "mob_skullObj", "mob_skull", true);
-        this.loadObjects(map, "mob_slugObj", "mob_slug", true);
-        this.loadObjects(map, "mob_handObj", "mob_hand", true);
+        this.loadObjects(map, "mob_skullObj", "mob_skull", "mob_skull_anim", true);
+        this.loadObjects(map, "mob_slugObj", "mob_slug", "mob_slug_anim", true);
+        this.loadObjects(map, "mob_handObj", "mob_hand", "mob_hand_anim", true);
         this.loadObjects(map, "ruinsTall_normalObj", "ruinsTall_normal");
         this.loadObjects(map, "ruinsTall_brokenObj", "ruinsTall_broken");
         this.loadObjects(map, "ruinsBrick_normalObj", "ruinsBrick_normal");
         this.loadObjects(map, "ruinsBrick_brokenObj", "ruinsBrick_broken");
 
-        // Create colliders with adjustments
-        this.createObjectColliders(map, "trees_normalObj", { width: 32, height: 64 });
-        this.createObjectColliders(map, "trees_fruitObj", { width: 32, height: 64 });
-        this.createObjectColliders(map, "trees_deadObj", { width: 32, height: 64 });
-        this.createObjectColliders(map, "trees_candleObj", { width: 32, height: 64 });
-        this.createObjectColliders(map, "trees_pineObj", { width: 32, height: 32 });
-        this.createObjectColliders(map, "ruinsTall_normalObj", { width: 32, height: 64 });
-        this.createObjectColliders(map, "ruinsTall_brokenObj", { width: 32, height: 64 });
-        this.createObjectColliders(map, "ruinsBrick_normalObj", { width: 32, height: 32 });
-        this.createObjectColliders(map, "ruinsBrick_brokenObj", { width: 32, height: 32 });
-        this.createObjectColliders(map, "doorObj", { width: 32, height: 64 });
-        this.createObjectColliders(map, "mailboxObj", { width: 32, height: 64 });
-
-        waterTile.setCollisionByProperty({ collides: true });
-        this.physics.add.collider(this.player, waterTile);
-
+        // Load player object
+        this.loadObjects(map, "playerObj", "stella_walkFront", "stella_walkFront", true);
+        
         // Set world bounds
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -117,76 +152,51 @@ export class GameScene extends Phaser.Scene {
             D: Phaser.Input.Keyboard.KeyCodes.D
         });
 
-        // Create mail group
-        this.createMail(map.getObjectLayer("mailObj").objects);
-
         // Add text UI for mail collected
         this.mailText = this.add.text(10, 10, 'Mail collected: 0/10', { fontSize: '12px', fill: '#fff' }).setScrollFactor(0);
+
+        // Add colliders
+        this.physics.add.collider(this.player, waterTile);
+        this.addColliders(map);
     }
 
-    loadObjects(map, objLayerName, spriteKey, isAnimated = false, isPlayer = false, scale = 1) {
-        const objectLayer = map.getObjectLayer(objLayerName);
-        if (!objectLayer) {
-            return;
-        }
-
-        objectLayer.objects.forEach(obj => {
-            const sprite = this.physics.add.sprite(obj.x - obj.width * 1, obj.y, spriteKey); // Adjust x position
-            sprite.setOrigin(0, 1); 
-            sprite.setScale(scale);
-            if (isPlayer) {
-                this.player = sprite;
+    loadObjects(map, objectLayerName, spriteName, animKey = null, animated = false) {
+        const objects = map.getObjectLayer(objectLayerName).objects;
+        objects.forEach(object => {
+            const sprite = this.physics.add.sprite(object.x, object.y, spriteName);
+            sprite.setOrigin(0.5, 0.75);
+            if (objectLayerName === "playerObj") {
+                this.player = sprite; 
             }
-            if (isAnimated) {
-                sprite.anims.play(spriteKey, true);
+            if (animated && animKey) {
+                sprite.play(animKey);
             }
         });
     }
 
-    createObjectColliders(map, objLayerName, size) {
-        const objectLayer = map.getObjectLayer(objLayerName);
-        if (!objectLayer) {
-            return;
-        }
+    addColliders(map) {
+        const collidableObjects = [
+            { name: "trees_normalObj", width: 2 },
+            { name: "trees_fruitObj", width: 2 },
+            { name: "trees_deadObj", width: 2 },
+            { name: "trees_candleObj", width: 2 },
+            { name: "trees_pineObj", width: 2 },
+            { name: "ruinsTall_normalObj", width: 1 },
+            { name: "ruinsTall_brokenObj", width: 1 },
+            { name: "ruinsBrick_normalObj", width: 1 },
+            { name: "ruinsBrick_brokenObj", width: 1 },
+            { name: "doorObj", width: 1 },
+            { name: "mailboxObj", width: 1 },
+        ];
 
-        objectLayer.objects.forEach(obj => {
-            const sprite = this.physics.add.sprite(obj.x - obj.width * 0.5, obj.y, objLayerName); // Adjust x position
-            sprite.setOrigin(0, 1); 
-            sprite.body.setImmovable(true);
-            sprite.body.setAllowGravity(false);
-
-            // Adjust collider size to be half of the image height
-            const colliderHeight = size.height / 2;
-            sprite.body.setSize(size.width, colliderHeight); 
-
-            // Offset the collider to the bottom half of the image
-            sprite.body.setOffset(0, colliderHeight);
-
-            sprite.setVisible(false); // Make collider sprite invisible
-            this.physics.add.collider(this.player, sprite);
+        collidableObjects.forEach(obj => {
+            const objects = map.getObjectLayer(obj.name).objects;
+            objects.forEach(object => {
+                const collider = this.add.rectangle(object.x, object.y, object.width * obj.width, object.height, 0x0000ff, 0);
+                this.physics.add.existing(collider, true);
+                this.physics.add.collider(this.player, collider);
+            });
         });
-
-        this.physics.world.drawDebug = false;
-    }
-
-    createMail(mailObjects) {
-        this.mail = this.physics.add.group();
-
-        mailObjects.forEach(obj => {
-            const mail = this.mail.create(obj.x - obj.width * 0.5, obj.y, "mail"); // Adjust x position
-            mail.setOrigin(0.5, 1);
-            mail.body.setAllowGravity(false);
-            mail.setDepth(1); // Ensure mail is on top layer
-        });
-
-        this.physics.add.overlap(this.player, this.mail, this.collectMail, null, this);
-    }
-
-    collectMail(player, mail) {
-        mail.destroy(); // Remove the collected mail from the scene
-        this.mailCollected++;
-        this.sound.play("mail_pickup");
-        this.mailText.setText(`Mail collected: ${this.mailCollected}/10`);
     }
 
     update() {
@@ -194,16 +204,16 @@ export class GameScene extends Phaser.Scene {
 
         if (this.keys.W.isDown) {
             this.player.body.setVelocityY(-160);
-            this.player.anims.play("walkFront", true);
+            this.player.anims.play("stella_walkBack", true);
         } else if (this.keys.S.isDown) {
             this.player.body.setVelocityY(160);
-            this.player.anims.play("walkBack", true);
+            this.player.anims.play("stella_walkFront", true);
         } else if (this.keys.A.isDown) {
             this.player.body.setVelocityX(-160);
-            this.player.anims.play("walkLeft", true);
+            this.player.anims.play("stella_walkLeft", true);
         } else if (this.keys.D.isDown) {
             this.player.body.setVelocityX(160);
-            this.player.anims.play("walkRight", true);
+            this.player.anims.play("stella_walkRight", true);
         } else {
             this.player.anims.stop();
         }
