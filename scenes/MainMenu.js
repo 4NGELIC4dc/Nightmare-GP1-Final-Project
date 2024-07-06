@@ -9,7 +9,7 @@ export class MainMenu extends Phaser.Scene {
         this.load.image("btn_credits", "assets/png/sign_Credits.png");
         this.load.image("btn_wakeUp", "assets/png/sign_WakeUp.png");
         this.load.image("btn_exit", "assets/png/sign_ExitGame.png");
-        this.load.image("btn_settings", "assets/png/sign_Settings.png");
+        this.load.image("btn_howtoplay", "assets/png/sign_HowToPlay.png");
 
         // Load audio
         this.load.audio("menu_bgm", "assets/audio/Menu Music.wav");
@@ -35,16 +35,16 @@ export class MainMenu extends Phaser.Scene {
         this.buttonClick = this.sound.add("button_click", { volume: 0.5 });
 
         // Create buttons
-        const buttonScale = 0.1;
-        const buttonY = this.cameras.main.height / 2 + 180;
-        const buttonSpacing = 105;
+        const buttonScale = 0.15;
+        const buttonY = this.cameras.main.height / 2 + 250;
+        const buttonSpacing = 150;
 
         const wakeUpButton = this.add.image(this.cameras.main.centerX - 1.5 * buttonSpacing, buttonY, "btn_wakeUp");
-        const settingsButton = this.add.image(this.cameras.main.centerX - 0.5 * buttonSpacing, buttonY, "btn_settings");
+        const howtoplayButton = this.add.image(this.cameras.main.centerX - 0.5 * buttonSpacing, buttonY, "btn_howtoplay");
         const creditsButton = this.add.image(this.cameras.main.centerX + 0.5 * buttonSpacing, buttonY, "btn_credits");
         const exitButton = this.add.image(this.cameras.main.centerX + 1.5 * buttonSpacing, buttonY, "btn_exit");
 
-        [wakeUpButton, settingsButton, creditsButton, exitButton].forEach(button => {
+        [wakeUpButton, howtoplayButton, creditsButton, exitButton].forEach(button => {
             button.setScale(buttonScale);
             button.setInteractive();
 
@@ -65,19 +65,19 @@ export class MainMenu extends Phaser.Scene {
         // Wake Up button
         wakeUpButton.on('pointerup', () => {
             this.sound.play('button_click');
+            this.menuBgm.stop(); 
             this.scene.start('GameScene', {
                 mailCollected: 0,
                 hasKey: false,
                 sprintTimeRemaining: 1500,
                 sprintCooldownRemaining: 0,
                 isGameOver: false,
-            });
-            this.menuBgm.stop();
-        });
+                    });
+                });
 
-        // Settings button
-        settingsButton.on('pointerup', () => {
-            this.scene.start('SettingsScene');
+        // How to play button
+        howtoplayButton.on('pointerup', () => {
+            this.scene.start('HowToPlayScene');
             this.buttonClick.play();
         });
 

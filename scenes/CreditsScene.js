@@ -36,17 +36,17 @@ export class CreditsScene extends Phaser.Scene {
         All rights reserved.`;
 
         const creditsText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, textContent, {
-            fontSize: '12px', 
+            fontSize: '20px', 
             color: '#ffffff',
             align: 'center',
             wordWrap: { width: this.cameras.main.width - 100 }
-        }).setOrigin(0.6, 0.1);
+        }).setOrigin(0.6, 0.35);
 
         // Button click sound
         this.buttonClick = this.sound.add("button_click", { volume: 0.5 });
 
         // Back button
-        const buttonScale = 0.10; 
+        const buttonScale = 0.15; 
         const exitButton = this.add.image(this.cameras.main.centerX, this.cameras.main.height - 50, "button_back");
         exitButton.setScale(buttonScale);
         exitButton.setInteractive();

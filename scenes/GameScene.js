@@ -182,7 +182,8 @@ export class GameScene extends Phaser.Scene {
             A: Phaser.Input.Keyboard.KeyCodes.A,
             S: Phaser.Input.Keyboard.KeyCodes.S,
             D: Phaser.Input.Keyboard.KeyCodes.D,
-            SHIFT: Phaser.Input.Keyboard.KeyCodes.SHIFT
+            SHIFT: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+            DEBUG: Phaser.Input.Keyboard.KeyCodes.P
         });
     
         // Text UI
@@ -429,11 +430,15 @@ export class GameScene extends Phaser.Scene {
                 door.setTexture("door_opened");
                 this.sound.play('door_opened');
                 door.body.enable = false;
+                this.time.delayedCall(1000, () => {
+                    this.gameBgm.stop(); // Stop the game BGM
+                    this.scene.start('FinalCutscene');
+                });
             }
         } else {
             this.tintObject(door);
         }
-    }
+    } 
 
     tintObject(object) {
         const originalTint = object.tint;
@@ -519,6 +524,12 @@ export class GameScene extends Phaser.Scene {
             this.player.anims.stop();
         }
 
+    // Debug key handling
+    if (Phaser.Input.Keyboard.JustDown(this.keys.DEBUG)) {
+        this.mailCollected = 10; // Update the mailCollected variable
+        this.mailText.setText('Mail collected: 10/10');
+    }
+
         this.mobs.forEach(mob => {
             if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), mob.getBounds())) {
                 this.gameOver();
@@ -561,12 +572,12 @@ export class GameScene extends Phaser.Scene {
         });        
         
         const gameOverText = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2 - 25, 'gameover_txt');
-        gameOverText.setScale(0.75); 
+        gameOverText.setScale(1.05); 
         gameOverText.setDepth(9);
         gameOverText.setScrollFactor(0);
         
-        const tryAgainButton = this.add.image(this.cameras.main.width / 2 - 75, this.cameras.main.height / 2 + 50, 'btn_tryAgain');
-        tryAgainButton.setScale(0.10);
+        const tryAgainButton = this.add.image(this.cameras.main.width / 2 - 100, this.cameras.main.height / 2 + 50, 'btn_tryAgain');
+        tryAgainButton.setScale(0.15);
         tryAgainButton.setScrollFactor(0);
         tryAgainButton.setInteractive();
         tryAgainButton.on('pointerdown', () => {
@@ -582,8 +593,8 @@ export class GameScene extends Phaser.Scene {
         });
         tryAgainButton.setDepth(15); // set the z-index of the button
         
-        const sleepForeverButton = this.add.image(this.cameras.main.width / 2 + 75, this.cameras.main.height / 2 + 50, 'btn_sleepForever');
-        sleepForeverButton.setScale(0.10);
+        const sleepForeverButton = this.add.image(this.cameras.main.width / 2 + 100, this.cameras.main.height / 2 + 50, 'btn_sleepForever');
+        sleepForeverButton.setScale(0.15);
         sleepForeverButton.setScrollFactor(0);
         sleepForeverButton.setInteractive();
         sleepForeverButton.on('pointerdown', () => {
