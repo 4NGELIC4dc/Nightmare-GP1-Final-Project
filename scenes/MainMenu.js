@@ -6,10 +6,10 @@ export class MainMenu extends Phaser.Scene {
     preload() {
         // Load images
         this.load.image("bg_image", "assets/png/Nightmare(cover).png");
-        this.load.image("button_credits", "assets/png/sign_Credits.png");
-        this.load.image("button_wakeUp", "assets/png/sign_WakeUp.png");
-        this.load.image("button_exit", "assets/png/sign_ExitGame.png");
-        this.load.image("button_settings", "assets/png/sign_Settings.png");
+        this.load.image("btn_credits", "assets/png/sign_Credits.png");
+        this.load.image("btn_wakeUp", "assets/png/sign_WakeUp.png");
+        this.load.image("btn_exit", "assets/png/sign_ExitGame.png");
+        this.load.image("btn_settings", "assets/png/sign_Settings.png");
 
         // Load audio
         this.load.audio("menu_bgm", "assets/audio/Menu Music.wav");
@@ -19,7 +19,7 @@ export class MainMenu extends Phaser.Scene {
     create() {
         // Add background image
         this.add.image(0, 0, "bg_image").setOrigin(0, 0).setDisplaySize(this.cameras.main.width, this.cameras.main.height);
-        
+
         // Background music
         if (!this.sound.get('menu_bgm')) {
             this.menuBgm = this.sound.add("menu_bgm", { loop: true, volume: 0.5 });
@@ -28,17 +28,21 @@ export class MainMenu extends Phaser.Scene {
             this.menuBgm = this.sound.get('menu_bgm');
         }
 
+        if (!this.sound.get('menu_bgm').isPlaying) {
+            this.sound.play('menu_bgm', { loop: true });
+        }
+
         this.buttonClick = this.sound.add("button_click", { volume: 0.5 });
 
         // Create buttons
-        const buttonScale = 0.1; 
-        const buttonY = this.cameras.main.height / 2 + 180; 
-        const buttonSpacing = 105; 
+        const buttonScale = 0.1;
+        const buttonY = this.cameras.main.height / 2 + 180;
+        const buttonSpacing = 105;
 
-        const wakeUpButton = this.add.image(this.cameras.main.centerX - 1.5 * buttonSpacing, buttonY, "button_wakeUp");
-        const settingsButton = this.add.image(this.cameras.main.centerX - 0.5 * buttonSpacing, buttonY, "button_settings");
-        const creditsButton = this.add.image(this.cameras.main.centerX + 0.5 * buttonSpacing, buttonY, "button_credits");
-        const exitButton = this.add.image(this.cameras.main.centerX + 1.5 * buttonSpacing, buttonY, "button_exit");
+        const wakeUpButton = this.add.image(this.cameras.main.centerX - 1.5 * buttonSpacing, buttonY, "btn_wakeUp");
+        const settingsButton = this.add.image(this.cameras.main.centerX - 0.5 * buttonSpacing, buttonY, "btn_settings");
+        const creditsButton = this.add.image(this.cameras.main.centerX + 0.5 * buttonSpacing, buttonY, "btn_credits");
+        const exitButton = this.add.image(this.cameras.main.centerX + 1.5 * buttonSpacing, buttonY, "btn_exit");
 
         [wakeUpButton, settingsButton, creditsButton, exitButton].forEach(button => {
             button.setScale(buttonScale);
@@ -46,7 +50,7 @@ export class MainMenu extends Phaser.Scene {
 
             // Button effects
             button.on('pointerover', () => {
-                button.setTint(0x808080); 
+                button.setTint(0xA9A9A9);
             });
 
             button.on('pointerout', () => {
@@ -60,7 +64,14 @@ export class MainMenu extends Phaser.Scene {
 
         // Wake Up button
         wakeUpButton.on('pointerup', () => {
-            this.scene.start('GameScene');
+            this.sound.play('button_click');
+            this.scene.start('GameScene', {
+                mailCollected: 0,
+                hasKey: false,
+                sprintTimeRemaining: 1500,
+                sprintCooldownRemaining: 0,
+                isGameOver: false,
+            });
             this.menuBgm.stop();
         });
 
@@ -78,7 +89,7 @@ export class MainMenu extends Phaser.Scene {
 
         // Exit button
         exitButton.on('pointerup', () => {
-            window.close(); 
+            window.close();
         });
     }
 }

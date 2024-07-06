@@ -355,7 +355,7 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":1632,
+                 "x":1664,
                  "y":1472
                 }],
          "opacity":1,
@@ -378,7 +378,7 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":1536,
+                 "x":1504,
                  "y":1472
                 }],
          "opacity":1,
@@ -405,6 +405,12 @@
                  "y":1472
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"spriteName",
+                 "type":"string",
+                 "value":"door"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
@@ -428,6 +434,12 @@
                  "y":1472
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"spriteName",
+                 "type":"string",
+                 "value":"mailbox"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
@@ -3056,6 +3068,12 @@
                  "y":1248
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"spriteName",
+                 "type":"string",
+                 "value":"tree_normal"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
@@ -3391,6 +3409,12 @@
                  "y":736
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"spriteName",
+                 "type":"string",
+                 "value":"tree_fruit"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
@@ -3966,6 +3990,12 @@
                  "y":1728
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"spriteName",
+                 "type":"string",
+                 "value":"tree_dead"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
@@ -4289,6 +4319,12 @@
                  "y":640
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"spriteName",
+                 "type":"string",
+                 "value":"tree_candle"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
@@ -5521,8 +5557,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":3072,
-                 "y":3040
+                 "x":3136,
+                 "y":3072
                 }, 
                 {
                  "gid":42,
@@ -5569,8 +5605,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":2848,
-                 "y":3200
+                 "x":2816,
+                 "y":3168
                 }, 
                 {
                  "gid":42,
@@ -5582,7 +5618,7 @@
                  "visible":true,
                  "width":32,
                  "x":2688,
-                 "y":3200
+                 "y":3168
                 }, 
                 {
                  "gid":42,
@@ -5594,7 +5630,7 @@
                  "visible":true,
                  "width":32,
                  "x":2560,
-                 "y":3200
+                 "y":3168
                 }, 
                 {
                  "gid":42,
@@ -5606,7 +5642,7 @@
                  "visible":true,
                  "width":32,
                  "x":2432,
-                 "y":3200
+                 "y":3168
                 }, 
                 {
                  "gid":42,
@@ -5630,7 +5666,7 @@
                  "visible":true,
                  "width":32,
                  "x":2176,
-                 "y":3200
+                 "y":3168
                 }, 
                 {
                  "gid":42,
@@ -6029,6 +6065,12 @@
                  "y":1312
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"spriteName",
+                 "type":"string",
+                 "value":"tree_pine"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
@@ -6337,6 +6379,12 @@
                  "y":1568
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"spriteName",
+                 "type":"string",
+                 "value":"ruinsTall_normal"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
@@ -6504,6 +6552,12 @@
                  "y":1792
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"spriteName",
+                 "type":"string",
+                 "value":"ruinsTall_broken"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,

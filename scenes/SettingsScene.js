@@ -6,7 +6,7 @@ export class CreditsScene extends Phaser.Scene {
     preload() {
         // Load images
         this.load.image("bg_image", "assets/png/Nightmare(cover).png");
-        this.load.image("button_back", "assets/png/sign_Back.png");
+        this.load.image("btn_back", "assets/png/sign_Back.png");
 
         // Load audio
         this.load.audio("button_click", "assets/audio/click on.wav");
@@ -21,12 +21,12 @@ export class CreditsScene extends Phaser.Scene {
 
         // Back button
         const buttonScale = 0.10; 
-        const exitButton = this.add.image(this.cameras.main.centerX, this.cameras.main.height - 50, "button_back");
+        const exitButton = this.add.image(this.cameras.main.centerX, this.cameras.main.height - 50, "btn_back");
         exitButton.setScale(buttonScale);
         exitButton.setInteractive();
 
         exitButton.on('pointerover', () => {
-            exitButton.setTint(0x808080); 
+            exitButton.setTint(A9A9A9); 
         });
 
         exitButton.on('pointerout', () => {

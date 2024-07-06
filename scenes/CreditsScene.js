@@ -36,7 +36,7 @@ export class CreditsScene extends Phaser.Scene {
         All rights reserved.`;
 
         const creditsText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, textContent, {
-            fontSize: '12px', // Adjust size as needed
+            fontSize: '12px', 
             color: '#ffffff',
             align: 'center',
             wordWrap: { width: this.cameras.main.width - 100 }
@@ -52,7 +52,7 @@ export class CreditsScene extends Phaser.Scene {
         exitButton.setInteractive();
 
         exitButton.on('pointerover', () => {
-            exitButton.setTint(0x808080);
+            exitButton.setTint(0xA9A9A9);
         });
 
         exitButton.on('pointerout', () => {
